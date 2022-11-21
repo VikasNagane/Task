@@ -1,10 +1,9 @@
-
 <html>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-    <title>Home</title>
+    <title>Loan page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     </head>   
 <body>
@@ -31,8 +30,7 @@
         <label for="cpan" class="col-sm-2 col-form-label">PAN NO:</label>
         <div class="col-sm-5">
             <input type="text"  id="cpan" class="form-control" />
-           <!-- <span id="panalert"></span> -->
-           <span id="lblPANCard" class="error"></span>
+           <!-- <span id="panalert"></span>  <span id="lblPANCard" class="error"></span> -->
         </div>
     </div>
 
@@ -60,7 +58,8 @@
         var femail=document.getElementById("cmail").value;
         var floan=document.getElementById("cloan").value;
         var fpan=document.getElementById("cpan").value;  
-        */ 
+        */
+        
       
     var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
     var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
@@ -77,60 +76,83 @@
             return str;
         }; 
 
-                document.getElementById('cloan').onkeyup = function () {
-                    document.getElementById('Amountinwords').innerHTML = inWords(document.getElementById('cloan').value);
-                    };   
+        document.getElementById('cloan').onkeyup = function () {
+        document.getElementById('Amountinwords').innerHTML = inWords(document.getElementById('cloan').value);
+            };   
             
         
-                    function ValidatePAN() {
-                        var txtPANCard = document.getElementById("cpan");
-                        var lblPANCard = document.getElementById("lblPANCard")
+                    function ValidatePAN(fpan) {
+                        //var lblPANCard = document.getElementById("lblPANCard")
                         var regex = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
-                        if (regex.test(txtPANCard.value.toUpperCase())) {
-                            lblPANCard.style.visibility = "hidden";
-                            return true;
-                        } else {
+                        if(fpan==null || fpan=="")
+                        {
+                            window.alert("PAN field is blank");
+                            exit();
+                             //return false;
+                        } 
+                         else if (regex.test(fpan.toUpperCase())) {
+                            //lblPANCard.style.visibility = "hidden";
+                            //return true;
+                            
+                        }
+                        else {
                             window.alert("Invalid pan");
                             exit();
-                            return false;
+                            //return false;
                         }
                     }
 
 
+                    function validateEmail(femail) {
+                        const regex_pattern =      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                        
+
+                        if(femail==null || femail=="")
+                        {
+                            window.alert("Email field is blank");
+                            exit();
+                             //return false;
+                        }
+                        else if (regex_pattern.test(femail)) {
+                            //return true;
+                        }
+                        else{
+                            window.alert('The email address is not valid');
+                            exit();
+                            //return false;
+                        }
+                    }
+
+                       
+                    
+                    function validatename(fname){  
+                            if (fname==null || fname==""){  
+                            window.alert("Name can't be blank"); 
+                            exit();
+                             //return false; 
+                            }
+                            else if(fname.length<4){  
+                            alert("Name must be at least 4 characters long.");  
+                            exit();  
+                             //return false;
+                            }  
+                            }  
+
+
+
         function formSubmit()
         {
-        
-            ValidatePAN()
+           
         var fname=document.getElementById("cfullname").value;
         var femail=document.getElementById("cmail").value;
         var floan=document.getElementById("cloan").value;
-        var fpan=document.getElementById("cpan").value;     
+        var fpan=document.getElementById("cpan").value; 
+        validatename(fname); 
+        validateEmail(femail); 
+        ValidatePAN(fpan);  
 
-
-            if(fname.length<1)
-            {
-        
-                window.alert("full Name filed is blank -please enter correct details ");
-                //document.getElementById('namealert').innerHTML ="Please Enter Valid value";
-                exit();        
-            }     
-        
-        else if(femail.length<1)
-            {
-                window.alert("email filed is blank");
-                //document.getElementById("emailalert").innerHTML=<b class="text-danger">Please Enter Valid value</b>
-            exit();
-            }
-           
-           else if(fpan.length <1)
-            {
-                window.alert("Pan filed is blank");
-                //document.getElementById("panalert").innerHTML=<b class="text-danger">Please Enter Valid value</b>
-                exit();
-    
-            }
             
-           else if(floan.length<1)
+         if(floan.length<1)
             {
                 window.alert("loan amount filed is blank");
                 exit();
@@ -138,12 +160,9 @@
             else
             {
                 window.alert("Form Submitted Successfully");
-            }
-            //window.alert("Form Submitted Successfully");
-            
+            } 
              
         }
-
 
   </script> 
 </body>
