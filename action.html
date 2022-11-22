@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification</title>
+</head>
+<body>
+     
+<div style=" font-size: 30px;  color: rgb(32, 7, 63); text-align: center;">
+    <div style="font-size: 40px; color: red; margin: 0 auto;">
+        Welcome <br>
+    </div>
+    Dear <strong><span id="data">Full Name</span></strong> Thank you for your inquery. <br> A 4 Digit Verification Number has been sent to your <strong><span id="data1"> Email</span></strong><br>
+    Please Check It.
+    </div>
+    <script type="text/javascript">
+
+        document.getElementById("data").innerHTML=localStorage.getItem("txtValue");
+        document.getElementById("data1").innerHTML=localStorage.getItem("txtValue1");
+    </script>
+        
+</body>
+</html>

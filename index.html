@@ -6,9 +6,10 @@
     <title>Loan page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     </head>   
-<body>
+<body onload="document.form1.cfullname.focus();">
      <h1 class='text-center bg-primary text-white pt-3 pb-3 mb-4'> Pixel6 Loan </h1>
-<form >
+<form  name='form1' onsubmit='return formSubmit()'>
+
     <div class="container text-center">
     <div class="row mb-3">
         <label for="cfullname" class="col-sm-2 col-form-label">Full Name:</label>
@@ -45,7 +46,7 @@
 
     <div class="row mb-3">
         <div class="col-sm-5 col-form-label">
-            <button type="submit" onclick="formSubmit()" class="btn btn-primary"> submit </button>
+            <button type="submit"  class="btn btn-primary" value="submit"> submit </button>
         </div>
         
     </div> 
@@ -80,25 +81,38 @@
         document.getElementById('Amountinwords').innerHTML = inWords(document.getElementById('cloan').value);
             };   
             
-        
+function getData()
+{
+    
+        var fname=document.getElementById("cfullname").value;
+        var femail=document.getElementById("cmail").value;
+    
+    //saving the values in local storage
+    localStorage.setItem("txtValue", fname);
+    localStorage.setItem("txtValue1", femail);
+       
+}
+
+
+
+
                     function ValidatePAN(fpan) {
-                        //var lblPANCard = document.getElementById("lblPANCard")
                         var regex = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
                         if(fpan==null || fpan=="")
                         {
                             window.alert("PAN field is blank");
-                            exit();
-                             //return false;
+                            fpan.focus();
+                             return false;
                         } 
                          else if (regex.test(fpan.toUpperCase())) {
-                            //lblPANCard.style.visibility = "hidden";
-                            //return true;
+
+                            return true;
                             
                         }
                         else {
                             window.alert("Invalid pan");
-                            exit();
-                            //return false;
+                            fpan.focus();
+                            return false;
                         }
                     }
 
@@ -110,16 +124,16 @@
                         if(femail==null || femail=="")
                         {
                             window.alert("Email field is blank");
-                            exit();
-                             //return false;
+                            femail.focus();
+                             return false;
                         }
                         else if (regex_pattern.test(femail)) {
-                            //return true;
+                            return true;
                         }
                         else{
                             window.alert('The email address is not valid');
-                            exit();
-                            //return false;
+                            femail.focus();
+                            return false;
                         }
                     }
 
@@ -128,39 +142,60 @@
                     function validatename(fname){  
                             if (fname==null || fname==""){  
                             window.alert("Name can't be blank"); 
-                            exit();
-                             //return false; 
+                            fname.focus();
+                            return false; 
                             }
                             else if(fname.length<4){  
                             alert("Name must be at least 4 characters long.");  
-                            exit();  
-                             //return false;
+                            fname.focus();
+                             return false;
+                            }
+                            else{
+                                return true;
                             }  
                             }  
+ function ValidateLoanAmt(floan)
+ {
+    if(floan.length<1)
+            {
+                window.alert("loan amount filed is blank");
+                floan.focus();
+                return false;
+            }
+            else{
+                return true;
+            }  
+ }
+
 
 
 
         function formSubmit()
         {
            
+        //gettting the values
         var fname=document.getElementById("cfullname").value;
         var femail=document.getElementById("cmail").value;
         var floan=document.getElementById("cloan").value;
-        var fpan=document.getElementById("cpan").value; 
-        validatename(fname); 
-        validateEmail(femail); 
-        ValidatePAN(fpan);  
+        var fpan=document.getElementById("cpan").value;
+        
 
-            
-         if(floan.length<1)
+        getData();
+        if(validatename(fname))
+        {
+            if(validateEmail(femail))
             {
-                window.alert("loan amount filed is blank");
-                exit();
-            }  
-            else
-            {
-                window.alert("Form Submitted Successfully");
-            } 
+                if(ValidatePAN(fpan))
+                {
+                    if(ValidateLoanAmt(floan))
+                    {
+                        window.alert("Form Submitted Successfully");
+                        window.location="action.html";
+                    }
+                }
+            }
+        }
+        return false;     
              
         }
 
